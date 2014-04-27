@@ -2,6 +2,8 @@
 #define __QUADCOPTER_CONFIG_H
 
 /* Hardware environments */
+#define configNO_IMU                    0
+
 /* Radio Control */
 #define USE_FUTABA_CONTROLLER		1
 #define USE_WFLY_CONTROLLER		0

@@ -369,6 +369,7 @@ int main(void)
 	vSemaphoreCreateBinary(serial_tx_wait_sem);
 	serial_rx_queue = xQueueCreate(1, sizeof(serial_msg));
 
+#if !configNO_IMU
 	/* IMU Initialization, Attitude Correction Flight Control */
 	xTaskCreate(check_task,
 		    (signed portCHAR *) "Initial checking",
@@ -383,6 +384,13 @@ int main(void)
 		    (signed portCHAR *) "Flight control",
 		    4096, NULL,
 		    tskIDLE_PRIORITY + 9, &FlightControl_Handle);
+
+	/* System error handler*/
+	xTaskCreate(error_handler_task,
+		    (signed portCHAR *) "Error handler",
+		    512, NULL,
+		    tskIDLE_PRIORITY + 7, NULL);
+#endif
 
 	/* QuadCopter Developing Shell, Ground Station Software */
 	xTaskCreate(shell_task,
@@ -402,12 +410,6 @@ int main(void)
 		    (signed portCHAR *) "Watch",
 		    1024, NULL,
 		    tskIDLE_PRIORITY + 7, &watch_task_handle);
-
-	/* System error handler*/
-	xTaskCreate(error_handler_task,
-		    (signed portCHAR *) "Error handler",
-		    512, NULL,
-		    tskIDLE_PRIORITY + 7, NULL);
 
 	vTaskSuspend(FlightControl_Handle);
 	vTaskSuspend(correction_task_handle);
