@@ -4,14 +4,6 @@
 #include "stm32f4xx.h"
 
 typedef __IO enum {
-	FSM_Tx,
-	FSM_Rx,
-	FSM_CTRL,
-	FSM_UART,
-	FSM_DATA
-} FSM_Mode;
-
-typedef __IO enum {
 	Mode_GyrCorrect,
 	Mode_AccCorrect,  // 僅在水平狀態下做校正
 	Mode_MagCorrect,
