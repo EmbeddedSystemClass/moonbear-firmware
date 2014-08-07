@@ -146,13 +146,15 @@ void ground_station_task(void)
 	}
 }
 
+extern float  __mag[3];
+extern float __yaw;
 void mavlink_receiver_task(void)
 {
 	uint8_t buffer;
 
 	while(1) {
-		buffer = usart3_read();
-
-		mavlink_parse_char(MAVLINK_COMM_0, buffer, &received_msg, &received_status); 
+		printf("[0]%f[1]%f[2]%f\n\r", __mag[0], __mag[1], __mag[2]);
+		printf("[yaw]%f\n\r", __yaw);
+		vTaskDelay((uint32_t) 200.0/(1000.0 / configTICK_RATE_HZ));
 	}
 }

@@ -90,7 +90,7 @@ void attitude_sense(attitude_t *attitude, imu_data_t *imu_raw_data, imu_data_t *
 
 }
 
-
+float __yaw;
 void heading_sense(attitude_t *attitude,imu_data_t *imu_raw_data,euler_trigonometry_t* negative_euler){
 
 float MagXx=0.0f,MagYx=0.0f,MagZx=0.0f;
@@ -112,6 +112,7 @@ float MagX_rotated=0.0f,MagY_rotated=0.0f;//,MagZ_rotated=0.0f;
 		(attitude -> yaw) += 360.0f;
 	}
 
+	__yaw = attitude->yaw;
 
 }
 

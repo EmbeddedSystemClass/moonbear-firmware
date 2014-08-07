@@ -5,6 +5,8 @@
 #include "led.h"
 
 
+float __mag[3] = {0.0};
+
 void hmc5983_delay(volatile uint32_t count)
 {
 
@@ -85,8 +87,9 @@ void hmc5983_convert_to_scale(imu_unscaled_data_t *imu_unscaledData, imu_data_t 
 	imu_scaledData->mag[0]	= (float)(imu_unscaledData->mag[0]-imu_offset->mag[0]) * imu_offset->mag_scale[0];
 	imu_scaledData->mag[1]	= (float)(imu_unscaledData->mag[1]-imu_offset->mag[1]) * imu_offset->mag_scale[1]; // correct with board orientation
 	imu_scaledData->mag[2]	= (float)(imu_unscaledData->mag[2]-imu_offset->mag[2]) * imu_offset->mag_scale[2];
-
-
+	__mag[0] = imu_scaledData->mag[0];
+	__mag[1] = imu_scaledData->mag[1];
+	__mag[2] = imu_scaledData->mag[2];
 }
 
 
